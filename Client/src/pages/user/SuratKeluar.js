@@ -72,7 +72,7 @@ const Surat = () => {
         return;
       }
 
-      const response = await axios.post("http://localhost:3000/generateDocx", {
+      const response = await axios.post("http://localhost:3000/selesaigenerateDocx", {
         data: formData,
       }, { responseType: 'blob', withCredentials: true }); // Include credentials in the request
 
@@ -81,7 +81,7 @@ const Surat = () => {
         const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = downloadUrl;
-        link.setAttribute('download', 'SuratDiterimaMagang.docx');
+        link.setAttribute('download', 'SuratSelesaiMagang.docx');
         document.body.appendChild(link);
         link.click();
       } else {
@@ -177,7 +177,7 @@ const Surat = () => {
         <div className="home-section">
           <div className="homepage-container">
             <div>
-              <h1 className="h1">Unduh Surat Diterima Magang</h1>
+              <h1 className="h1">Unduh Surat Selesai Magang</h1>
               <div>
                 <label>First Name:</label>
                 <input type="text" name="first_name" onChange={handleInputChange} />

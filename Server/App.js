@@ -34,6 +34,7 @@ const path = require("path");
 const PizZip = require("pizzip");
 const Docxtemplater = require("docxtemplater");
 
+//DITERIMA MAGANG SURAT
 app.post("/generateDocx", (req, res) => {
   try {
     const { data } = req.body;
@@ -61,7 +62,7 @@ app.post("/generateDocx", (req, res) => {
     });
   
     // Set response headers for file download
-    res.setHeader("Content-Disposition", "attachment; filename=output.docx");
+    res.setHeader("Content-Disposition", "attachment; filename=SuratDiterimaMagang.docx");
     res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
   
     // Send the file buffer as response
@@ -72,6 +73,83 @@ app.post("/generateDocx", (req, res) => {
 });
 
 
+//SELESAI MAGANG SURAT
+app.post("/selesaigenerateDocx", (req, res) => {
+  try {
+    const { data } = req.body;
+  
+    // Load the docx file as binary content
+    const content = fs.readFileSync(path.resolve(__dirname, "selesaimagang.docx"), "binary");
+  
+    // Unzip the content of the file
+    const zip = new PizZip(content);
+  
+    // This will parse the template, and will throw an error if the template is
+    // invalid, for example, if the template is "{user" (no closing tag)
+    const doc = new Docxtemplater(zip, {
+      paragraphLoop: true,
+      linebreaks: true,
+    });
+  
+    // Render the document
+    doc.render(data);
+  
+    // Get the zip document and generate it as a nodebuffer
+    const buf = doc.getZip().generate({
+      type: "nodebuffer",
+      compression: "DEFLATE",
+    });
+  
+    // Set response headers for file download
+    res.setHeader("Content-Disposition", "attachment; filename=SuratSelesaiMagang.docx");
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+  
+    // Send the file buffer as response
+    res.send(buf);
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
+
+
+
+//SERTIFIKAT PIAGAM MAGANG
+app.post("/sertifikatgenerateDocx", (req, res) => {
+  try {
+    const { data } = req.body;
+  
+    // Load the docx file as binary content
+    const content = fs.readFileSync(path.resolve(__dirname, "sertifikatmagang.docx"), "binary");
+  
+    // Unzip the content of the file
+    const zip = new PizZip(content);
+  
+    // This will parse the template, and will throw an error if the template is
+    // invalid, for example, if the template is "{user" (no closing tag)
+    const doc = new Docxtemplater(zip, {
+      paragraphLoop: true,
+      linebreaks: true,
+    });
+  
+    // Render the document
+    doc.render(data);
+  
+    // Get the zip document and generate it as a nodebuffer
+    const buf = doc.getZip().generate({
+      type: "nodebuffer",
+      compression: "DEFLATE",
+    });
+  
+    // Set response headers for file download
+    res.setHeader("Content-Disposition", "attachment; filename=SertifikatMagang.docx");
+    res.setHeader("Content-Type", "application/vnd.openxmlformats-officedocument.wordprocessingml.document");
+  
+    // Send the file buffer as response
+    res.send(buf);
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+});
 
 
 

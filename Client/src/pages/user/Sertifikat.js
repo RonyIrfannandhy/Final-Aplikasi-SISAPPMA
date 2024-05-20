@@ -22,10 +22,9 @@ const Surat = () => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
-    nim: "",
-    prodi: "",
-    fakultas: "",
-    universitas: "",
+    asal_kota: "",
+    koordinator: "",
+    jabatan: "",
     tgl_masuk: "",
     tgl_keluar: "",
   });
@@ -67,12 +66,12 @@ const Surat = () => {
   const handleGenerateDocx = async () => {
     try {
       // Check if all input fields are filled
-      if (!formData.first_name || !formData.last_name || !formData.nim || !formData.prodi || !formData.fakultas || !formData.universitas || !formData.tgl_masuk || !formData.tgl_keluar) {
+      if (!formData.first_name || !formData.last_name || !formData.asal_kota || !formData.koordinator || !formData.jabatan || !formData.tgl_masuk || !formData.tgl_keluar) {
         setErrorMessage("Isi data diatas terlebih dahulu.");
         return;
       }
 
-      const response = await axios.post("http://localhost:3000/generateDocx", {
+      const response = await axios.post("http://localhost:3000/sertifikatgenerateDocx", {
         data: formData,
       }, { responseType: 'blob', withCredentials: true }); // Include credentials in the request
 
@@ -81,7 +80,7 @@ const Surat = () => {
         const downloadUrl = window.URL.createObjectURL(new Blob([response.data]));
         const link = document.createElement('a');
         link.href = downloadUrl;
-        link.setAttribute('download', 'SuratDiterimaMagang.docx');
+        link.setAttribute('download', 'SertifikatMagang.docx');
         document.body.appendChild(link);
         link.click();
       } else {
@@ -177,7 +176,7 @@ const Surat = () => {
         <div className="home-section">
           <div className="homepage-container">
             <div>
-              <h1 className="h1">Unduh Surat Diterima Magang</h1>
+              <h1 className="h1">Unduh Sertifikat Magang</h1>
               <div>
                 <label>First Name:</label>
                 <input type="text" name="first_name" onChange={handleInputChange} />
@@ -187,20 +186,16 @@ const Surat = () => {
                 <input type="text" name="last_name" onChange={handleInputChange} />
               </div>
               <div>
-                <label>NIM:</label>
-                <input type="text" name="nim" onChange={handleInputChange} />
+                <label>Asal Kota:</label>
+                <input type="text" name="asal_kota" onChange={handleInputChange} />
               </div>
               <div>
-                <label>Program Studi:</label>
-                <input type="text" name="prodi" onChange={handleInputChange} />
+                <label>Koordinator Magang:</label>
+                <input type="text" name="koordinator" onChange={handleInputChange} />
               </div>
               <div>
-                <label>Fakultas:</label>
-                <input type="text" name="fakultas" onChange={handleInputChange} />
-              </div>
-              <div>
-                <label>Asal Instansi:</label>
-                <input type="text" name="universitas" onChange={handleInputChange} />
+                <label>Jabatan Koordinator:</label>
+                <input type="text" name="jabatan" onChange={handleInputChange} />
               </div>
               <div>
                 <label>Tanggal Masuk:</label>

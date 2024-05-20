@@ -26,6 +26,8 @@ import UserPages from './pages/user/UserPages';
 import Admin from './pages/Admin';
 import Profil from './pages/user/Profil';
 import Surat from './pages/user/Surat';
+import SuratKeluar from './pages/user/SuratKeluar';
+import Sertifikat from './pages/user/Sertifikat';
 
 const App = () => {
   return (
@@ -49,6 +51,8 @@ const App = () => {
         <Route path="user/homepage" element={<UserPages />}/>
         <Route path="user/surat" element={<Surat/>}/>
         <Route path="user/profil" element={<Profil/>}/>
+        <Route path="user/suratkeluar" element={<SuratKeluar/>}/>
+        <Route path="user/sertifikat" element={<Sertifikat/>}/>
 
         <Route path='admin' element={<Admin />} />
         <Route path="homepage" element={<Homepage />}/>
